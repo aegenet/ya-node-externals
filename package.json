@@ -1,0 +1,60 @@
+{
+  "name": "@aegenet/ya-node-externals",
+  "description": "Yet Another Node Externals",
+  "version": "999.0.0",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "bin": {
+    "ya-node-externals": "build/cli.js"
+  },
+  "files": [
+    "build"
+  ],
+  "author": "Alexandre Genet",
+  "repository": "https://github.com/aegenet/ya-node-externals",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "exclude": "**/*.spec.ts",
+    "reporter": [
+      "html",
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "report-dir": "coverage"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.7.17",
+    "codecov": "^3.8.3",
+    "json": "^11.0.0",
+    "mocha": "^10.1.0",
+    "nyc": "^15.1.0",
+    "rimraf": "^3.0.2",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@aegenet/belt-readdir": "^0.1.3"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "clean": "node ./node_modules/rimraf/bin ./build ./coverage ./.nyc_output ./node_modules",
+    "test": "nyc ts-mocha src/**/*.spec.ts --timeout 10000",
+    "cover:report": "node ./../../node_modules/nyc/bin/nyc -t ./coverage report --reporter html --reporter json --reporter text-summary",
+    "build": "node ./node_modules/rimraf/bin ./build && node ./node_modules/typescript/bin/tsc",
+    "codecov": "./node_modules/.bin/codecov",
+    "build:version": "node ./.build/build-flow.js build",
+    "build:rust": "rustc ./rust/main.rs",
+    "publish:version": "node ./.build/build-flow.js publish"
+  }
+}

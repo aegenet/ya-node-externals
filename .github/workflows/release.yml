@@ -1,0 +1,52 @@
+name: Release CI
+
+env:
+  REGISTRY: ghcr.io
+  NODE_VERSION: 18
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v3
+    # - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        registry-url: 'https://npm.pkg.github.com'
+        # Defaults to the user or organization that owns the workflow file
+        scope: '@aegenet'
+    - name: setup git config
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+
+    - name: Install dependencies
+      env:
+        CI: true
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      run: rm -rf node_modules && yarn install --frozen-lockfile
+
+    - name: Test
+      run: yarn run test
+
+    - name: Build
+      env:
+        CI: true
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      run: yarn run build:version
+
+    - name: Publish dev packages
+      env:
+        CI: true
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      run: yarn run publish:version
