@@ -2,7 +2,7 @@
 
 > Yet Another Node Externals
 >
-> This library is useful to get the list of all dependencies in your ./node_modules folder.
+> This library is useful to get the complete list of your dependencies.
 
 ## With Rollup
 

@@ -1,26 +1,33 @@
-import { readFile } from 'node:fs/promises';
-import * as path from 'node:path';
-import { readdir } from '@aegenet/belt-readdir';
+import { DependenciesProvider } from './providers/dependencies-provider';
+import { dumbProvider } from './providers/dumb-provider';
 
 /**
  * Get package name from package.json in node_modules/.
  */
-export function nodeExternals(cwd: string): Promise<string[]> {
-  const set = new Set<string>();
-  const proms: Promise<void>[] = [];
+export async function nodeExternals(cwd: string, options: {
+  provider?: 'dumb' | 'dependencies' | 'allDependencies',
+  cache?: boolean,
+} = {}): Promise<string[]> {
 
-  return readdir(path.resolve(cwd, 'node_modules'), ({ path }) => {
-    if (path.endsWith('package.json')) {
-      proms.push(readFile(path, 'utf-8').then(content => {
-        set.add(JSON.parse(content).name);
-      }));
-    }
-    return false;
-  })
-  .then( () => {
-    return Promise.all(proms)
-    .then(() => {
-      return [...set];
-    });
-  });
+  options.cache ||= false;
+  options.provider ||= 'dependencies';
+
+  switch (options.provider) {
+    case 'dependencies':
+      return await new DependenciesProvider({
+        dependencies: true,
+        peerDependencies: true,
+        devDependencies: false,
+      }).getAll(cwd);
+    case 'allDependencies':
+      return await new DependenciesProvider({
+        dependencies: true,
+        peerDependencies: true,
+        devDependencies: true,
+      }).getAll(cwd);
+    case 'dumb':
+      return await dumbProvider(cwd);
+    default:
+      throw new Error(`Invalid supplier: '${options.provider}' ('dependencies', 'allDependencies' or 'dumb' are valid).`)
+  }
 }
