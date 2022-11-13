@@ -2,8 +2,19 @@
   "name": "@aegenet/ya-node-externals",
   "description": "Yet Another Node Externals",
   "version": "999.0.0",
-  "main": "build/index.js",
-  "typings": "build/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "exports": {
+    "node": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "default": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "typings": "./dist/bundle.d.ts",
   "bin": {
     "ya-node-externals": "build/cli.js"
   },
@@ -35,8 +46,10 @@
     "mocha": "^10.1.0",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
+    "rollup-plugin-dts": "^5.0.0",
     "ts-mocha": "^10.0.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "vite": "^3.2.3"
   },
   "dependencies": {
     "@aegenet/belt-readdir": "^0.1.3"
@@ -50,11 +63,13 @@
   "scripts": {
     "clean": "node ./node_modules/rimraf/bin ./build ./coverage ./.nyc_output ./node_modules",
     "test": "nyc ts-mocha src/**/*.spec.ts --timeout 10000",
-    "cover:report": "node ./../../node_modules/nyc/bin/nyc -t ./coverage report --reporter html --reporter json --reporter text-summary",
-    "build": "node ./node_modules/rimraf/bin ./build && node ./node_modules/typescript/bin/tsc",
+    "cover:report": "node ./node_modules/nyc/bin/nyc -t ./coverage report --reporter html --reporter json --reporter text-summary",
     "codecov": "./node_modules/.bin/codecov",
     "build:version": "node ./.build/build-flow.js build",
-    "build:rust": "rustc ./rust/main.rs",
-    "publish:version": "node ./.build/build-flow.js publish"
+    "publish:version": "node ./.build/build-flow.js publish",
+    "build": "yarn tsc && yarn run build:vite && yarn run build:dts",
+    "tsc": "node ./node_modules/rimraf/bin build && node ./node_modules/typescript/bin/tsc",
+    "build:vite": "node ./node_modules/rimraf/bin dist && node ./node_modules/vite/bin/vite build",
+    "build:dts": "node ./node_modules/rollup/dist/bin/rollup -c rollup.config.dts.js"
   }
 }

@@ -9,15 +9,15 @@
 ```js rollup.config.js
 const { nodeExternals } = require('@aegenet/ya-node-externals');
 
-module.exports = {
+export default async () => ({
   // [...]
 
   // make sure to externalize deps that shouldn't be bundled
   // into your library
-  external: nodeExternals(process.cwd()),
+  external: await nodeExternals(process.cwd()),
   
   // [...]
-};   
+});   
 ```
 
 ## With Vite
@@ -26,7 +26,7 @@ module.exports = {
 import { defineConfig } from 'vite';
 import { nodeExternals } from '@aegenet/ya-node-externals';
 
-export default defineConfig({
+export default async defineConfig({
   // [...]
   build: {
     // [...]
@@ -35,7 +35,7 @@ export default defineConfig({
 
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: nodeExternals(process.cwd()),
+      external: (await nodeExternals(process.cwd())),
 
       // [...]
     }
