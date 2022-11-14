@@ -15,7 +15,9 @@ export default async () => ({
   // make sure to externalize deps that shouldn't be bundled
   // into your library
   external: await nodeExternals(process.cwd()),
-  
+  // or for node package
+  external: (await nodeExternals(process.cwd())).concat([/^node:/]),
+
   // [...]
 });   
 ```
@@ -35,7 +37,9 @@ export default async defineConfig({
 
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: (await nodeExternals(process.cwd())),
+      external: await nodeExternals(process.cwd()),
+      // or for node package
+      external: (await nodeExternals(process.cwd())).concat([/^node:/]),
 
       // [...]
     }
