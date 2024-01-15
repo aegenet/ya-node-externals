@@ -10,7 +10,7 @@ const tasks = {
       version = process.env.GITHUB_REF_NAME;
     } else if (process.env.GITHUB_REF_NAME) {
       // workflow github
-      version = `999.${new Date().getTime()}.0`;
+      version = `0.${new Date().getTime()}.0-dev`;
     }
 
     if (version) {
@@ -23,10 +23,11 @@ const tasks = {
   },
   /** Publish */
   publish: () => {
+    const registry = process.env.NPM_PUSH_REGISTRY || 'https://npm.pkg.github.com/';
     const cmds = [
       // Remove devDependencies in npm package
-      `json -I -f ./package.json -e "this.devDependencies={};this.scripts={};this.jest=undefined;"`,
-      `npm publish --registry=https://npm.pkg.github.com/`
+      `json -I -f ./package.json -e "this.devDependencies={};this.scripts={};this.jest=undefined;this.publishConfig['@aegenet:registry']='${registry}';"`,
+      `npm publish --@aegenet:registry=${registry}${process.env.NPM_PUBLISH_PUBLIC === '1' ? ' --access public' : '' }`
     ];
     return cmds.join(' && ');
   },

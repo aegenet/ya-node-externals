@@ -21,18 +21,21 @@ export async function config(options) {
         external: options.nodeExternal ? (await nodeExternals(options.cwd)).concat([/^node:/]).concat(options.external || []) : options.external || [],
         output: [
           {
+            name: options.libName,
             format: 'cjs',
-            entryFileNames: `index.cjs`,
+            entryFileNames: `[name].cjs`,
             globals: options.globals || {},
           },
           {
+            name: options.libName,
             format: 'es',
-            entryFileNames: `index.mjs`,
+            entryFileNames: `[name].mjs`,
             globals: options.globals || {},
           },
           {
+            name: options.libName,
             format: 'umd',
-            entryFileNames: `index.[format].js`,
+            entryFileNames: `[name].[format].js`,
             globals: options.globals || {},
           },
         ],
