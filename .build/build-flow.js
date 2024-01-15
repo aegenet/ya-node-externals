@@ -26,7 +26,7 @@ const tasks = {
     const registry = process.env.NPM_PUSH_REGISTRY || 'https://npm.pkg.github.com/';
     const cmds = [
       // Remove devDependencies in npm package
-      `json -I -f ./package.json -e "this.devDependencies={};this.scripts={};this.jest=undefined;this.publishConfig['@aegenet:registry']='${registry}';"`,
+      `node ./node_modules/json -I -f ./package.json -e "this.devDependencies={};this.scripts={};this.jest=undefined;this.publishConfig['@aegenet:registry']='${registry}';"`,
       `npm publish --@aegenet:registry=${registry}${process.env.NPM_PUBLISH_PUBLIC === '1' ? ' --access public' : '' }`
     ];
     return cmds.join(' && ');
