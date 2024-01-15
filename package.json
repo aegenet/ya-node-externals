@@ -65,7 +65,6 @@
     "cover:report": "node ./node_modules/nyc/bin/nyc -t ./coverage report --reporter html --reporter json --reporter text-summary",
     "codecov": "./node_modules/.bin/codecov",
     "build:version": "node ./.build/build-flow.js build",
-    "publish:version": "node ./.build/build-flow.js publish",
     "build": "yarn tsc && yarn run build:vite && yarn run build:dts --bundleConfigAsCjs",
     "tsc": "rimraf build && node ./node_modules/typescript/bin/tsc",
     "build:vite": "rimraf dist && node ./node_modules/vite/bin/vite build",

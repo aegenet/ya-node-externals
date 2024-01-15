@@ -51,7 +51,7 @@ jobs:
         NPM_PUBLISH_PUBLIC: '0'
         NPM_PUSH_REGISTRY: https://npm.pkg.github.com/
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      run: yarn run publish:version
+      run: node ./.build/build-flow.js publish
 
     - name: Publish packages npm
       env:
@@ -59,4 +59,4 @@ jobs:
         NPM_PUBLISH_PUBLIC: '1'
         NPM_PUSH_REGISTRY: https://registry.npmjs.org/
         NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-      run: yarn run publish:version
+      run: node ./.build/build-flow.js publish

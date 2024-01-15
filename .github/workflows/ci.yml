@@ -53,7 +53,7 @@ jobs:
       env:
         CI: true
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      run: yarn run publish:version
+      run: node ./.build/build-flow.js publish
 
 
   # Pull Request
