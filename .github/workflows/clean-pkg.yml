@@ -22,6 +22,6 @@ jobs:
           package-name: 'ya-node-externals'
           package-type: 'npm'
           min-versions-to-keep: 5
-          include-versions: '^0\.|^999\.'
+          include-versions: '^999\.|\-dev$'
           token: ${{ secrets.DELETE_PACKAGES_TOKEN }}
           sleep-interval: 10000

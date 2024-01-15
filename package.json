@@ -1,7 +1,7 @@
 {
   "name": "@aegenet/ya-node-externals",
   "description": "Yet Another Node Externals",
-  "version": "0.0.0",
+  "version": "0.0.0-dev",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "exports": {
