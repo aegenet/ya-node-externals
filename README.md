@@ -1,6 +1,6 @@
 [![npm version](https://img.shields.io/npm/v/@aegenet/ya-node-externals.svg)](https://www.npmjs.com/package/@aegenet/ya-node-externals)
 [![Build Status](https://github.com/aegenet/ya-node-externals/actions/workflows/ci.yml/badge.svg)](https://github.com/aegenet/ya-node-externals/actions)
-[![codecov](https://codecov.io/gh/aegenet/ya-node-externals/branch/main/graph/badge.svg?token=)](https://codecov.io/gh/aegenet/ya-node-externals)
+[![codecov](https://codecov.io/gh/aegenet/ya-node-externals/branch/main/graph/badge.svg?token=O10QZZZVRP)](https://codecov.io/gh/aegenet/ya-node-externals)
 <br />
 
 # @aegenet/ya-node-externals
@@ -62,6 +62,13 @@ export default async defineConfig({
   // [...]
 });
 ```
+
+# Coverage
+[![codecov](https://codecov.io/gh/aegenet/ya-node-externals/branch/main/graph/badge.svg?token=O10QZZZVRP)](https://codecov.io/gh/aegenet/ya-node-externals)
+
+![Coverage sunburst](https://codecov.io/gh/aegenet/ya-node-externals/branch/main/graphs/sunburst.svg?token=O10QZZZVRP)
+
+![Coverage tree](https://codecov.io/gh/aegenet/ya-node-externals/branch/main/graphs/tree.svg?token=O10QZZZVRP)
 
 # License
 

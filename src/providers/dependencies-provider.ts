@@ -1,6 +1,5 @@
 import { access, readFile, stat } from 'node:fs/promises';
 import * as path from 'node:path';
-import { readdir } from '@aegenet/belt-readdir';
 
 export class DependenciesProvider {
   private _set?: Set<string>;
