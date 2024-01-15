@@ -7,6 +7,19 @@ export async function config(options) {
   const folder = options.folder ? options.folder + '/' : '';
 
   return defineConfig({
+    plugins: [{
+      name: 'ya-banner-plugin',
+      generateBundle(options, bundles) {
+        const banner = "#!/usr/bin/env node";
+        const test = /cli\.(js|ts|cjs|mjs|.umd.js)$/;
+  
+        for (const [fileName, bundle] of Object.entries(bundles)) {
+          if (test.test(fileName)) {
+            bundle.code = `${banner}\n${bundle.code}`;
+          }
+        }
+      },
+    }],
     build: {
       outDir: `./dist/${folder}`,
       lib: {

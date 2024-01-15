@@ -2,27 +2,30 @@
   "name": "@aegenet/ya-node-externals",
   "description": "Yet Another Node Externals",
   "version": "0.0.0-dev",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "main": "dist/node/index.cjs",
+  "module": "dist/node/index.mjs",
   "exports": {
     "node": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "require": "./dist/node/index.cjs",
+      "import": "./dist/node/index.mjs"
     },
     "default": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "require": "./dist/node/index.cjs",
+      "import": "./dist/node/index.mjs"
     }
   },
   "typings": "./dist/bundle.d.ts",
   "bin": {
-    "ya-node-externals": "build/cli.js"
+    "ya-node-externals": "dist/cli/cli.cjs"
   },
   "files": [
-    "build"
+    "dist"
   ],
   "author": "Alexandre Genet",
-  "repository": "https://github.com/aegenet/ya-node-externals",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aegenet/ya-node-externals.git"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=18"
@@ -64,9 +67,9 @@
     "test": "nyc ts-mocha './src/**/*.spec.ts' --timeout 10000",
     "cover:report": "node ./node_modules/nyc/bin/nyc -t ./coverage report --reporter html --reporter json --reporter text-summary",
     "build:version": "node ./.build/build-flow.js build",
-    "build": "yarn tsc && yarn run build:vite && yarn run build:dts --bundleConfigAsCjs",
+    "build": "rimraf ./dist && yarn tsc && yarn run build:vite && yarn run build:dts --bundleConfigAsCjs",
     "tsc": "rimraf build && node ./node_modules/typescript/bin/tsc",
-    "build:vite": "rimraf dist && node ./node_modules/vite/bin/vite build",
+    "build:vite": "rimraf dist && vite -c ./vite.config.js build && vite -c ./vite.cli.config.js build",
     "build:dts": "node ./node_modules/rollup/dist/bin/rollup -c rollup.config.dts.js"
   }
 }

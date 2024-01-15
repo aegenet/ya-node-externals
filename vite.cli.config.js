@@ -4,7 +4,7 @@ const { config } = require('./.build/vite.configurator');
 export default config({
   cwd: __dirname,
   libName: '@aegenet/ya-node-externals',
-  entryPoint: 'index',
-  folder: 'node',
+  folder: 'cli',
+  entryPoint: 'cli',
   nodeExternal: true,
 });

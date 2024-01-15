@@ -1,7 +1,7 @@
 const dts = require('rollup-plugin-dts');
 const path = require('node:path');
 // if vite build is ok, cjs is ready, so... let's go
-const { nodeExternals } = require('./../dist/index.cjs');
+const { nodeExternals } = require('./../dist/node/index.cjs');
 
 module.exports = async function(options) {
   const folder = options.folder ? options.folder + '/' : '';
