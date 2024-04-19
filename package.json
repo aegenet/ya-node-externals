@@ -6,14 +6,17 @@
   "module": "dist/node/index.mjs",
   "exports": {
     "node": {
+      "types": "./dist/bundle.d.ts",
       "require": "./dist/node/index.cjs",
       "import": "./dist/node/index.mjs"
     },
     "default": {
+      "types": "./dist/bundle.d.ts",
       "require": "./dist/node/index.cjs",
       "import": "./dist/node/index.mjs"
     }
   },
+  "types": "./dist/bundle.d.ts",
   "typings": "./dist/bundle.d.ts",
   "bin": {
     "ya-node-externals": "dist/cli/cli.cjs"
